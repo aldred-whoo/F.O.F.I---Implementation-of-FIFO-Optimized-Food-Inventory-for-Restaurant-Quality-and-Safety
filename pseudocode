@@ -1,0 +1,82 @@
+##BEGIN
+    #/ FIFO Optimized Food Inventory (F.O.F.I.) System
+#initialize an empty list called inventory
+
+#DEFINE function confirm_retry(prompt):
+#loop:
+#prompt user for input (y/n)
+    #if input is 'y':
+        #return true
+    #else if input is 'n':
+        #return false
+    #else:
+        #display "invalid input. please enter 'y' or 'n'." DEFINE function main_menu():
+#loop:
+    #display "--- restaurant inventory system ---" display "1. register item" display "2. check inventory" display "3. withdraw item" display "4. exit" prompt user to enter choice (1–4)
+        #if choice is '1':
+            #call register_item()
+        #else if choice is '2':
+            #call check_inventory()
+        #else if choice is '3':
+            #call withdraw_item()
+        #else if choice is '4': 
+            #display "exiting system. goodbye!" break
+        #else:
+            #display "invalid choice. please try again."
+
+# DEFINE function register_item():
+    #display "--- register item ---"
+#loop:
+    #prompt for item name (allow 'exit' to cancel)
+    #prompt for quantity (validate as positive integer)
+    #prompt for expiration date in yyyy-mm-dd format
+        #if expiration date < today:
+            #display error
+            #continue
+        #set entry_date = today
+        #add item to inventory with name, quantity, expiration date, and entry date
+    #display confirmation message
+    #ask user if they want to register another using confirm_retry()
+        #if no:
+            #break
+
+#DEFINE function check_inventory():
+    #set today = current date
+#remove all expired items from inventory and save to expired_items
+    #if inventory is empty:
+        #display "no items in inventory" else:
+        #display each item with name, quantity, entry date, expiration date, and status: - status = ok / nearly expired / expired based on how many days left
+    #if expired_items is not empty:
+        #display "items disposed (expired):"
+        #show item names, quantities, entry and expiration dates
+
+#DEFINE function withdraw_item():
+    #display "--- withdraw item ---" call check_inventory() to remove expired items first
+#loop:
+    #prompt user to enter item name to withdraw (allow 'exit')
+    #find all matching items in inventory
+        #if no match:
+            #display "no stock found" ask to try again using confirm_retry()
+        #if no:
+            #return
+        #continue
+    #sort matching items by entry date (fifo)
+    #display total quantity available
+    #prompt for withdrawal quantity (validate as positive integer and within limit)
+        #if invalid:
+            #ask to try again using confirm_retry()
+        #if no:
+            #return
+        #continue
+    #loop through sorted items:
+    #remove quantity from oldest batches first
+        #if batch depleted:
+            #remove batch from inventory
+            #reduce batch quantity
+    #display summary of withdrawn amounts with entry and expiration dates
+    #ask if user wants to withdraw another using confirm_retry()
+    #break
+
+#// program starts here
+    #if this script is run directly:
+#call main_menu()
